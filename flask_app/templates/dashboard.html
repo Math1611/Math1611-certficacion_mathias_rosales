@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CinePedia - Bienvenido</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container row between">
+      <h1>CinePedia</h1>
+      <nav> 
+        <a class="btn" href="/cine/nueva">Nueva Peli</a>
+        <a class="btn outline" href="/logout">Cerrar Sesión</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <h2>Bienvenido, {{ usuario.nombre if usuario else '' }}</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Película</th>
+          <th>Director</th>
+          <th>Fecha de Estreno</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in peliculas %}
+        <tr>
+          <td>{{ p.nombre }}</td>
+          <td>{{ p.director }}</td>
+          <td>{{ p.fecha_estreno }}</td>
+          <td>
+            <a href="/cine/{{ p.id }}">Ver</a>
+            {% if p.usuario_id == usuario.id %}
+              | <a href="/cine/editar/{{ p.id }}">Editar</a>
+              | <a class="danger" href="/cine/borrar/{{ p.id }}" onclick="return confirm('¿Borrar película?')">Borrar</a>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>
+
+

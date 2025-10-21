@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CinePedia - Registro / Inicio</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <h1>CinePedia</h1>
+    </div>
+  </header> 
+  <main class="container grid-2">
+    <section>
+      <h2>Registro</h2>
+      {% with messages = get_flashed_messages(category_filter=['registro']) %}
+      {% if messages %}
+      <ul class="errors">{% for m in messages %}<li>{{ m }}</li>{% endfor %}</ul>
+      {% endif %}
+      {% endwith %}
+      <form action="/registrar" method="post" class="card">
+        <label>Nombre<input name="nombre" required></label>
+        <label>Apellido<input name="apellido" required></label>
+        <label>E-mail<input name="email" type="email" required></label>
+        <label>Contraseña<input name="password" type="password" required></label>
+        <label>Conf. Contraseña<input name="confirmar" type="password" required></label>
+        <button>Registrar</button>
+      </form>
+    </section>
+    <section>
+      <h2>Inicio de Sesión</h2>
+      {% with messages = get_flashed_messages(category_filter=['login']) %}
+      {% if messages %}
+      <ul class="errors">{% for m in messages %}<li>{{ m }}</li>{% endfor %}</ul>
+      {% endif %}
+      {% endwith %}
+      <form action="/login" method="post" class="card">
+        <label>E-mail<input name="email" type="email" required></label>
+        <label>Contraseña<input name="password" type="password" required></label>
+        <button>Iniciar Sesión</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
+
+

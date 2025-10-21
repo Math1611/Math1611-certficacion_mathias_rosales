@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nueva Película</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head> 
+<body>
+  <header class="topbar">
+    <div class="container row between">
+      <h1>Nueva Peli</h1>
+      <nav>
+        <a class="btn" href="/cine">Inicio</a>
+        <a class="btn outline" href="/logout">Cerrar Sesión</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    {% with messages = get_flashed_messages(category_filter=['pelicula']) %}
+    {% if messages %}<ul class="errors">{% for m in messages %}<li>{{ m }}</li>{% endfor %}</ul>{% endif %}
+    {% endwith %}
+    <form class="card" action="/cine/crear" method="post">
+      <label>Nombre de Peli<input name="nombre" value="{{ session.get('form_peli', {}).get('nombre','') }}" required></label>
+      <label>Director<input name="director" value="{{ session.get('form_peli', {}).get('director','') }}" required></label>
+      <label>Fecha de Estreno<input type="date" name="fecha_estreno" value="{{ session.get('form_peli', {}).get('fecha_estreno','') }}" required></label>
+      <label>Sinopsis<textarea name="sinopsis" rows="6" required>{{ session.get('form_peli', {}).get('sinopsis','') }}</textarea></label>
+      <button>Guardar Película</button>
+    </form>
+  </main>
+</body>
+</html>
+
+

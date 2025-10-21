@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ver Película</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container row between">
+      <h1>Ver Peli</h1>
+      <nav>
+        <a class="btn" href="/cine">Inicio</a>
+        <a class="btn outline" href="/logout">Cerrar Sesión</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <article class="card">
+      <h2>{{ peli.nombre }}</h2>
+      <p><strong>Publicado por:</strong> {{ peli.autor }}</p>
+      <p><strong>Director</strong> {{ peli.director }}</p>
+      <p><strong>Fecha:</strong> {{ peli.fecha_estreno }}</p>
+      <p><strong>Sinopsis:</strong><br>{{ peli.sinopsis }}</p>
+    </article>
+ 
+    <section class="card">
+      <h3>Comentarios</h3>
+      {% if peli.usuario_id != session['user_id'] %}
+      <form class="row" action="/cine/{{ peli.id }}/comentar" method="post">
+        <input class="grow" name="contenido" placeholder="Escribe un comentario...">
+        <button>Enviar</button>
+      </form>
+      {% endif %}
+      <ul class="comentarios">
+        {% for c in comentarios %}
+        <li class="comentario">
+          <div>
+            <strong>{{ c.autor }}</strong> - {{ c.created_at.strftime('%d-%m-%Y') if c.created_at else '' }}
+          </div>
+          <div class="row between">
+            <p>{{ c.contenido }}</p>
+            {% if c.autor_id == session['user_id'] %}
+            <a class="danger" href="/cine/{{ peli.id }}/comentarios/{{ c.id }}/borrar">Borrar</a>
+            {% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
+
+
